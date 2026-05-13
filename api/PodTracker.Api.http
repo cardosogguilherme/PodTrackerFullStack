@@ -1,0 +1,25 @@
+@host = http://localhost:5176
+
+### List all players
+GET {{host}}/players
+Accept: application/json
+
+# @name createdPlayer
+POST {{host}}/players
+Content-Type: application/json
+
+{ "name": "Gui" }
+
+###
+GET {{host}}/players/{{createdPlayer.response.body.id}}
+
+### Update a player
+PUT {{host}}/players/1
+Content-Type: application/json
+
+{
+  "name": "Guilherme"
+}
+
+### Delete a player
+DELETE {{host}}/players/1
