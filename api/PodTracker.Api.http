@@ -23,3 +23,37 @@ Content-Type: application/json
 
 ### Delete a player
 DELETE {{host}}/players/1
+
+### List all decks
+GET {{host}}/decks
+Accept: application/json
+
+### Get deck by id
+GET {{host}}/decks/1
+Accept: application/json
+
+### Create a deck (requires PlayerId of an existing player — create one via /players first if needed)
+POST {{host}}/decks
+Content-Type: application/json
+
+{
+  "name": "Atraxa Superfriends",
+  "commanderName": "Atraxa, Praetors' Voice",
+  "playerId": 1
+}
+
+### Update a deck (replace 1 with the id returned from the POST above)
+PUT {{host}}/decks/1
+Content-Type: application/json
+
+{
+  "name": "Atraxa Superfriends (v2)",
+  "commanderName": "Atraxa, Praetors' Voice",
+  "playerId": 1
+}
+
+### Delete a deck
+DELETE {{host}}/decks/1
+
+### Confirm deletion (should 404)
+GET {{host}}/decks/1
