@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="PodTracker.Api.Tests\**" />
-    <Content Remove="PodTracker.Api.Tests\**" />
-    <EmbeddedResource Remove="PodTracker.Api.Tests\**" />
-    <None Remove="PodTracker.Api.Tests\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
