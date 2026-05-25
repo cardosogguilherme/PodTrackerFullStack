@@ -58,8 +58,10 @@ public class DeckEndpointsTests : IDisposable
         var player = SeedPlayer();
 
         var response = await _client.PostAsJsonAsync("/decks", SampleDeck(player.Id));
+        var created = await response.Content.ReadFromJsonAsync<DeckResponse>();
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
+        created!.PlayerName.Should().Be("Gui");
     }
 
     [Fact]
@@ -114,5 +116,27 @@ public class DeckEndpointsTests : IDisposable
         retrievedDeck!.Name.Should().Be("Atraxa Counters");
         retrievedDeck.CommanderName.Should().Be("Atraxa, Praetors' Voice");
         retrievedDeck.PlayerId.Should().Be(deck.PlayerId);
+        retrievedDeck.PlayerName.Should().Be("Gui");
+    }
+
+    [Fact]
+    public async Task GetDeck_WhenNotFound_Returns404()
+    {
+        var response = await _client.GetAsync("/decks/999");
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task PutDeck_WhenNotFound_Returns404()
+    {
+        var response = await _client.PutAsJsonAsync("/decks/999", new CreateDeckRequest("Nonexistent Deck", "Nonexistent Commander", 1));
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task DeleteDeck_WhenNotFound_Returns404()
+    {
+        var response = await _client.DeleteAsync("/decks/999");
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 }
