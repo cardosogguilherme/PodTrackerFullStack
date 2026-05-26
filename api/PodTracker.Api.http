@@ -39,7 +39,7 @@ Content-Type: application/json
 {
   "name": "Atraxa Superfriends",
   "commanderName": "Atraxa, Praetors' Voice",
-  "playerId": 1
+  "playerId": 6
 }
 
 ### Update a deck (replace 1 with the id returned from the POST above)
@@ -57,3 +57,29 @@ DELETE {{host}}/decks/1
 
 ### Confirm deletion (should 404)
 GET {{host}}/decks/1
+
+### Create game
+POST {{host}}/games
+# @name createdGame
+Content-Type: application/json
+
+{
+  "Participants": [
+    {
+      "PlayerId": 3,
+      "DeckId": 2
+    },
+    {
+      "PlayerId": 6,
+      "DeckId": 3
+    }
+  ]
+}
+
+### Update game
+PUT {{host}}/games/{{createdGame.response.body.id}}/result
+Content-Type: application/json
+
+{
+  "WinnerGamePlayerId": 13
+}

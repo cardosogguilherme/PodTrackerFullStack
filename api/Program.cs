@@ -27,6 +27,7 @@ app.UseCors();
 
 app.MapPlayerEndpoints();
 app.MapDeckEndpoints();
+app.MapGameEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
