@@ -26,3 +26,9 @@ public record GameResponse(
     DateTime? EndTime,
     List<GameParticipantResponse> Participants
 );
+
+public record StatsResponse(
+    int GamesPlayed,
+    int Wins,
+    double WinRatio
+);

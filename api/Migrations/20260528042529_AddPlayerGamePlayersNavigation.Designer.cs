@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodTracker.Api.Data;
 
@@ -10,9 +11,11 @@ using PodTracker.Api.Data;
 namespace PodTracker.Api.Migrations
 {
     [DbContext(typeof(PodTrackerDbContext))]
-    partial class PodTrackerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260528042529_AddPlayerGamePlayersNavigation")]
+    partial class AddPlayerGamePlayersNavigation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.8");

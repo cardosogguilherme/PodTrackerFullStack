@@ -4,11 +4,12 @@
 GET {{host}}/players
 Accept: application/json
 
+### Create player
 # @name createdPlayer
 POST {{host}}/players
 Content-Type: application/json
 
-{ "name": "Gui" }
+{ "name": "Gui2" }
 
 ###
 GET {{host}}/players/{{createdPlayer.response.body.id}}
@@ -22,7 +23,10 @@ Content-Type: application/json
 }
 
 ### Delete a player
-DELETE {{host}}/players/1
+DELETE {{host}}/players/2
+
+### Player stats
+GET {{host}}/players/1/stats
 
 ### List all decks
 GET {{host}}/decks
@@ -39,7 +43,7 @@ Content-Type: application/json
 {
   "name": "Atraxa Superfriends",
   "commanderName": "Atraxa, Praetors' Voice",
-  "playerId": 3
+  "playerId": 2
 }
 
 ### Update a deck (replace 1 with the id returned from the POST above)
@@ -66,22 +70,22 @@ Content-Type: application/json
 {
   "Participants": [
     {
-      "PlayerId": 3,
-      "DeckId": 2
+      "PlayerId": 1,
+      "DeckId": 1
     },
     {
-      "PlayerId": 6,
-      "DeckId": 3
+      "PlayerId": 3,
+      "DeckId": 1
     }
   ]
 }
 
 ### Update game
-PUT {{host}}/games/{{createdGame.response.body.id}}/result
+PUT {{host}}/games/3/result
 Content-Type: application/json
 
 {
-  "WinnerGamePlayerId": 27
+  "WinnerGamePlayerId": 5
 }
 
 ### Get games

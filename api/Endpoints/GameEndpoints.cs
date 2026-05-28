@@ -69,10 +69,21 @@ public static class GameEndpoints
             return Results.Ok(games);
         });
 
-
-        group.MapDelete("/{id}", async (int id, PodTrackerDbContext db) =>
+        group.MapGet("/{id:int}", async (int id, PodTrackerDbContext db) =>
         {
-            var game = await db.Games.FindAsync(id);
+            var game = await ProjectToResponse(db.Games.Where(g => g.Id == id))
+                .FirstOrDefaultAsync();
+
+
+            return game is not null ? Results.Ok(game) : Results.NotFound();
+        });
+
+
+        group.MapDelete("/{id:int}", async (int id, PodTrackerDbContext db) =>
+        {
+            var game = await db.Games
+                .Include(g => g.GamePlayers)
+                .FirstOrDefaultAsync(g => g.Id == id);
             if (game is null) { return Results.NotFound(); }
 
             db.Games.Remove(game);
