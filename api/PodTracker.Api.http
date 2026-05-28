@@ -39,7 +39,7 @@ Content-Type: application/json
 {
   "name": "Atraxa Superfriends",
   "commanderName": "Atraxa, Praetors' Voice",
-  "playerId": 6
+  "playerId": 3
 }
 
 ### Update a deck (replace 1 with the id returned from the POST above)
