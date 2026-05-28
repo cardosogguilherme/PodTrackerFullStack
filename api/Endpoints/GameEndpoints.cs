@@ -61,6 +61,25 @@ public static class GameEndpoints
 
             return Results.Ok(response);
         });
+
+        group.MapGet("/", async (PodTrackerDbContext db) =>
+        {
+            var games = await ProjectToResponse(db.Games).ToListAsync();
+
+            return Results.Ok(games);
+        });
+
+
+        group.MapDelete("/{id}", async (int id, PodTrackerDbContext db) =>
+        {
+            var game = await db.Games.FindAsync(id);
+            if (game is null) { return Results.NotFound(); }
+
+            db.Games.Remove(game);
+            await db.SaveChangesAsync();
+
+            return Results.NoContent();
+        });
     }
 
     private static IQueryable<GameResponse> ProjectToResponse(IQueryable<Game> games) =>

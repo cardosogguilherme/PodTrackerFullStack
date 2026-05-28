@@ -59,8 +59,8 @@ DELETE {{host}}/decks/1
 GET {{host}}/decks/1
 
 ### Create game
-POST {{host}}/games
 # @name createdGame
+POST {{host}}/games
 Content-Type: application/json
 
 {
@@ -81,5 +81,11 @@ PUT {{host}}/games/{{createdGame.response.body.id}}/result
 Content-Type: application/json
 
 {
-  "WinnerGamePlayerId": 13
+  "WinnerGamePlayerId": 27
 }
+
+### Get games
+GET {{host}}/games
+
+### Delete a game
+DELETE {{host}}/games/13
