@@ -12,23 +12,49 @@ public static class PlayerEndpoints
     {
         var group = app.MapGroup("/players").WithTags("Players");
 
-        group.MapGet("/", async (PodTrackerDbContext db) => await db.Players.ToListAsync());
+        group.MapGet("/", async (PodTrackerDbContext db) =>
+        {
+            var players = await db.Players.Select(player =>
+                new PlayerResponse(
+                    Id: player.Id,
+                    Name: player.Name
+                )).ToListAsync();
+
+            return Results.Ok(players);
+        });
 
         group.MapGet("/{id}", async (int id, PodTrackerDbContext db) =>
         {
-            var player = await db.Players.FindAsync(id);
+            var player = await db.Players
+                .Where(player => player.Id == id)
+                .Select(player => new PlayerResponse(
+                    Id: player.Id,
+                    Name: player.Name
+                )).FirstOrDefaultAsync();
             return player is not null ? Results.Ok(player) : Results.NotFound();
         });
 
-        group.MapPost("/", async (Player player, PodTrackerDbContext db) =>
+        group.MapPost("/", async (CreatePlayerRequest input, PodTrackerDbContext db) =>
         {
-            db.Players.Add(player);
+            var playerRequest = new Player
+            {
+                Name = input.Name
+            };
+
+            db.Players.Add(playerRequest);
             await db.SaveChangesAsync();
 
-            return Results.Created($"/players/{player.Id}", player);
+            var playerResult = await db.Players
+                .Where(player => player.Id == playerRequest.Id)
+                .Select(player => new PlayerResponse(
+                    Id: player.Id,
+                    Name: player.Name
+                )).FirstOrDefaultAsync();
+
+            return Results.Created($"/players/{playerResult!.Id}", playerResult);
         });
 
-        group.MapPut("/{id}", async (int id, Player input, PodTrackerDbContext db) =>
+        group.MapPut("/{id}", async (int id, UpdatePlayerRequest input, PodTrackerDbContext db) =>
         {
             var player = await db.Players.FindAsync(id);
             if (player is null) { return Results.NotFound(); }
