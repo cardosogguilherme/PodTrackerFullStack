@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Player } from '../models/Player';
 import { API_BASE } from "../lib/api";
+import type { Player } from '../models/Player';
 
 async function fetchPlayers(signal: AbortSignal): Promise<Player[]> {
     const result = await fetch(API_BASE + '/players', { signal });
