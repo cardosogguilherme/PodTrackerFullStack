@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { CreatePlayerForm } from './components/CreatePlayerForm';
 import { PlayersList } from './components/PlayersList';
-import { SearchPlayer } from './components/SeachPlayer';
+import { SearchPlayer } from './components/SearchPlayer';
 import { usePlayers } from './hooks/usePlayers';
 
 function App() {
