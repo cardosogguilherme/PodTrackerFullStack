@@ -8,23 +8,23 @@ export function CreatePlayerForm() {
     return (
         <>
             {error && <p>{error.message}</p>}
-            <form onSubmit={e =>  {
+            <form onSubmit={e => {
                 e.preventDefault()
-                
+
                 if (!playerName.trim()) return
-                
+
                 mutate(
-                    { name: playerName },
-                    { onSuccess: () => setPlayerName("")}
+                    { name: playerName.trim() },
+                    { onSuccess: () => setPlayerName("") }
                 );
             }}>
-                <input 
-                    name="playerName" 
+                <input
+                    name="playerName"
                     value={playerName}
-                    disabled={isPending} 
+                    disabled={isPending}
                     onChange={e => setPlayerName(e.target.value)}
                 />
-                <button disabled={isPending} type="submit">Create Player</button>
+                <button disabled={isPending || !playerName.trim()} type="submit">Create Player</button>
             </form>
         </>
     );

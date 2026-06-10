@@ -1,21 +1,22 @@
-import { useState } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { CreatePlayerForm } from './components/CreatePlayerForm';
-import { PlayersList } from './components/PlayersList';
-import { SearchPlayer } from './components/SearchPlayer';
-import { usePlayers } from './hooks/usePlayers';
+import { GameScreen } from './screens/GameScreen';
+import { NewGameScreen } from './screens/NewGameScreen';
+import { PlayersScreen } from './screens/PlayersScreen';
 
 function App() {
-  const { data: players, isLoading, error } = usePlayers();
-  const [playerName, setPlayerName] = useState("");
-  const filtered = (players ?? []).filter(p =>
-    p.name.toLowerCase().includes(playerName.toLowerCase())
-  );
+
   return (
     <>
-      <CreatePlayerForm />
-      <SearchPlayer value={playerName} onChange={setPlayerName} />
-      <PlayersList players={filtered} isLoading={isLoading} error={error} />
+      <nav>
+        <Link to="/">Players</Link>
+        <Link to="/games/new">New Game</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<PlayersScreen />} />
+        <Route path="/games/new" element={<NewGameScreen />} />
+        <Route path="/games/:id" element={<GameScreen />} />
+      </Routes>
     </>
   )
 }
